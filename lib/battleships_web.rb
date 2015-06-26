@@ -38,7 +38,8 @@ class BattleshipsWeb < Sinatra::Base
 
   get '/play_game' do
     @message = "#{session[:player]}, choose coordinate to fire!"
-    @board = $game.opponent_board_view $game.send(session[:player])
+    @shots_fired = $game.opponent_board_view $game.send(session[:player])
+    @shots_received = $game.own_board_view $game.send(session[:player])
     erb :play_game
   end
 
@@ -48,7 +49,8 @@ class BattleshipsWeb < Sinatra::Base
     rescue
       @message = 'Coordinate invalid. Please fire again.'
     end
-    @board = $game.opponent_board_view $game.send(session[:player])
+    @shots_fired = $game.opponent_board_view $game.send(session[:player])
+    @shots_received = $game.own_board_view $game.send(session[:player])
     redirect '/victory' if $game.has_winner?
     @message = 'Well done! That was a hit!' if @result == :hit || @result == :sunk
     @message = 'Sorry, that was a miss!' if @result == :miss

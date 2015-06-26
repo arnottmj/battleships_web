@@ -1,8 +1,14 @@
 <%= @message %>
+<p>Shots fired:</p>
 <pre>
-<%= @board %> 
+<%= @shots_fired %> 
 </pre>
 <form method='post'>
 <input type="text" name="hit_coord">
 <input type="submit" value="Submit">
 </form>
+<p>Shots received:</p>
+<pre>
+<%= @shots_received %> 
+</pre>
+
