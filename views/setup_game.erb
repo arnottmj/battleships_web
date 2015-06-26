@@ -1,0 +1,29 @@
+<% if @status %>
+  <h1>The coordinate(s) you entered are invalid or the ships overlapped</h1>
+<% else %>
+  <h1><%= session[:player] %>, please position your ships!</h1>
+<% end %>
+<pre>
+<%= @board %>
+</pre>
+<%if @ships == [] %>
+  You are now ready. Click to begin.
+  <a href='/play_game'>begin</a>
+<% else %>
+  <form method="post">
+  <b>Ship:</b>
+  <select name="ship_select">
+    <% @ships.each do |ship|%>
+    <option value="<%=ship%>"><%= ship %></option>
+    <% end %>
+  </select>
+  <p><b>Orientation:</b>
+    <input id="hor" type="radio" name="dir" value='horizontally'>Horizontal
+      <input id="ver" type="radio" name="dir" value='vertically'>Vertical
+    </p>
+    <p><b>Coordinate:</b>
+    <input type="text" name="coord">
+    </p>
+    <input type="submit" value="place ship">
+  </form>
+<% end %>
