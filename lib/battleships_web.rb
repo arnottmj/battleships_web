@@ -28,7 +28,7 @@ class BattleshipsWeb < Sinatra::Base
     begin
       $game.send(session[:player]).place_ship(Ship.send(params[:ship_select]), params[:coord], params[:dir])
     rescue
-      redirect "/new_game_21?status=invalid"
+      redirect "/setup_game?status=invalid"
     end
     @ships = session[:player_ships].split(",")
     @ships.delete(params[:ship_select])
