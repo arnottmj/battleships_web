@@ -2,7 +2,6 @@ require 'sinatra/base'
 require 'battleships'
 
 class BattleshipsWeb < Sinatra::Base
-
   set :views, proc { File.join(root, '..', 'views') }
   enable :sessions
 
@@ -13,6 +12,7 @@ class BattleshipsWeb < Sinatra::Base
       $game = Game.new(Player,Board)
       session[:player] = 'player_1'
     end
+
     session[:player_ships] = "submarine,battleship,aircraft_carrier,cruiser,destroyer"
     erb :index
   end
@@ -30,6 +30,7 @@ class BattleshipsWeb < Sinatra::Base
     rescue
       redirect "/setup_game?status=invalid"
     end
+
     @ships = session[:player_ships].split(",")
     @ships.delete(params[:ship_select])
     session[:player_ships] = @ships.join(",")
@@ -49,6 +50,7 @@ class BattleshipsWeb < Sinatra::Base
     rescue
       @message = 'Coordinate invalid. Please fire again.'
     end
+
     @shots_fired = $game.opponent_board_view $game.send(session[:player])
     @shots_received = $game.own_board_view $game.send(session[:player])
     redirect '/victory' if $game.has_winner?
@@ -62,7 +64,6 @@ class BattleshipsWeb < Sinatra::Base
     @winner = 'Player 2' if $game.player_2.winner?
     erb :victory
   end
-
-
+  
   run! if app_file == $0
 end
